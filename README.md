@@ -3,7 +3,7 @@
 This Flex plugin shows how to customize the team view filters. 
 
 <p align="center">
-    <img src="screenshots/example.png?raw=true" width="300" >
+    <img src="screenshots/example.png?raw=true" width="400" >
 </p>
 
 ## Setup
