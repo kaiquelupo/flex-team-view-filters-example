@@ -13,7 +13,7 @@ const setTeamsFilters = async () => {
             {
                 value: "collections",
                 label: "Collections",
-                default: true
+                default: false
             },
             {
                 value: "leads",
