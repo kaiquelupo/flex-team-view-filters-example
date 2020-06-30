@@ -18,7 +18,7 @@ export default class TeamFiltersPlugin extends FlexPlugin {
    * @param manager { import('@twilio/flex-ui').Manager }
    */
   async init() {
-    await setTeamsFilters();
+    setTeamsFilters();
   }
   
 }
