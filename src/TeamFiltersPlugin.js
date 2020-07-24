@@ -1,7 +1,8 @@
-import React from 'react';
 import { FlexPlugin } from 'flex-plugin';
-
+import reducers, { namespace } from './states';
 import { setTeamsFilters } from './teams/filters';
+import { VERSION } from '@twilio/flex-ui';
+import { applyDefaultFilters } from './helpers/defaultFiltering';
 
 const PLUGIN_NAME = 'TeamFiltersPlugin';
 
@@ -10,15 +11,44 @@ export default class TeamFiltersPlugin extends FlexPlugin {
     super(PLUGIN_NAME);
   }
 
+  async init(flex, manager) {
+
+    this.registerReducers(manager);
+
+    applyDefaultFilters(manager);
+
+    setTeamsFilters(flex, {
+      defaultFilters: [
+        {
+          condition: "IN",
+          name: "data.attributes.teams",
+          values: "collections",
+          title: "Team",
+          fieldName: "teams",
+          show: false
+        }
+      ]
+    });
+    
+
+  }
+
   /**
-   * This code is run when your plugin is being started
-   * Use this to modify any UI components or attach to the actions framework
+   * Registers the plugin reducers
    *
-   * @param flex { typeof import('@twilio/flex-ui') }
-   * @param manager { import('@twilio/flex-ui').Manager }
+   * @param manager { Flex.Manager }
    */
-  async init() {
-    setTeamsFilters();
+  registerReducers(manager) {
+
+    console.log("@@@");
+    console.log(manager.store);
+    if (!manager.store.addReducer) {
+      // eslint: disable-next-line
+      console.error(`You need FlexUI > 1.9.0 to use built-in redux; you are currently on ${VERSION}`);
+      return;
+    }
+
+    manager.store.addReducer(namespace, reducers);
   }
   
 }
