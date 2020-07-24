@@ -1,8 +1,7 @@
 import { FlexPlugin } from 'flex-plugin';
 import reducers, { namespace } from './states';
-import { setTeamsFilters } from './teams/filters';
+import { setTeamsFilters, applyDefaultFilters } from './teams/filters';
 import { VERSION } from '@twilio/flex-ui';
-import { applyDefaultFilters } from './helpers/defaultFiltering';
 
 const PLUGIN_NAME = 'TeamFiltersPlugin';
 
@@ -16,20 +15,7 @@ export default class TeamFiltersPlugin extends FlexPlugin {
     this.registerReducers(manager);
 
     applyDefaultFilters(manager);
-
-    setTeamsFilters(flex, {
-      defaultFilters: [
-        {
-          condition: "IN",
-          name: "data.attributes.teams",
-          values: "collections",
-          title: "Team",
-          fieldName: "teams",
-          show: false
-        }
-      ]
-    });
-    
+    setTeamsFilters(flex);
 
   }
 
